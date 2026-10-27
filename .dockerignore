@@ -1,0 +1,8 @@
+.venv
+.env
+__pycache__
+*.pyc
+.git
+.codex_tmp_review
+tests
+README.md

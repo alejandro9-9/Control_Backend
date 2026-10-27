@@ -20,10 +20,15 @@ class Settings:
 
     @classmethod
     def from_env(cls) -> "Settings":
+        database_url = os.getenv("DATABASE_URL", cls.database_url)
+        if database_url.startswith("postgres://"):
+            database_url = "postgresql+psycopg://" + database_url[len("postgres://"):]
+        elif database_url.startswith("postgresql://"):
+            database_url = "postgresql+psycopg://" + database_url[len("postgresql://"):]
         return cls(
             app_name=os.getenv("APP_NAME", cls.app_name),
             environment=os.getenv("APP_ENV", cls.environment),
-            database_url=os.getenv("DATABASE_URL", cls.database_url),
+            database_url=database_url,
             cors_origins=os.getenv("CORS_ORIGINS", cls.cors_origins),
         )
 
